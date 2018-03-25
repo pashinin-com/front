@@ -1,0 +1,34 @@
+nav {
+	li {
+		$col: #535a60;
+		display: inline-block;
+		color: $col;
+		height: 50px;
+		line-height:50px;
+		min-width: 50px;
+		padding:0 0.5rem;
+
+		&.pressed{
+			background:rgba(0,0,0,0.15);
+		}
+
+		&.current{
+			border-bottom: 3px solid #F48024;
+			// background-color: #eee;
+		}
+		// transition: all 0.1s linear;
+		transition: background-color cubic-bezier(.165, .84, .44, 1) .25s,border-bottom-color ease-in-out .25s;
+
+		// &:first-child{
+		// 	padding-left:0
+		// }
+
+		&:hover{
+			color:darken($col, 100%);
+			background-color: #eee;
+		}
+		&:visited{
+			color:$col;
+		}
+	}
+}

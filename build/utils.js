@@ -12,24 +12,32 @@ exports.assetsPath = (_path) => {
 }
 
 exports.cssLoaders = function (options) {
-  options = options || {}
+  options = options || {};
 
   const cssLoader = {
     loader: 'css-loader',
     options: {
       minimize: process.env.NODE_ENV === 'production',
-      sourceMap: options.sourceMap
-    }
+      sourceMap: options.sourceMap,
+    },
   }
 
   // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
-    const loaders = [cssLoader]
+    const loaders = [cssLoader];
     if (loader) {
       loaders.push({
         loader: loader + '-loader',
+        // include: /node_modules/,
         options: Object.assign({}, loaderOptions, {
-          sourceMap: options.sourceMap
+          sourceMap: options.sourceMap,
+          includePaths: [
+            // path.resolve("./node_modules/bootstrap-sass/assets/stylesheets")
+            // path.resolve("./node_modules/bootstrap-sass/assets/stylesheets")
+            path.resolve('../node_modules'),
+            path.resolve('./node_modules'),
+            // '../node_modules/',
+          ],
         })
       })
     }
@@ -42,7 +50,7 @@ exports.cssLoaders = function (options) {
         fallback: 'vue-style-loader'
       })
     } else {
-      return ['vue-style-loader'].concat(loaders)
+      return ['vue-style-loader'].concat(loaders);
     }
   }
 
@@ -54,20 +62,21 @@ exports.cssLoaders = function (options) {
     sass: generateLoaders('sass', { indentedSyntax: true }),
     scss: generateLoaders('sass'),
     stylus: generateLoaders('stylus'),
-    styl: generateLoaders('stylus')
-  }
-}
+    styl: generateLoaders('stylus'),
+  };
+};
 
 // Generate loaders for standalone style files (outside of .vue)
 exports.styleLoaders = function (options) {
-  const output = []
+  const output = [];
   const loaders = exports.cssLoaders(options)
   for (const extension in loaders) {
     const loader = loaders[extension]
     output.push({
       test: new RegExp('\\.' + extension + '$'),
-      use: loader
-    })
+      use: loader,
+      include: /node_modules/,
+    });
   }
   return output
 }

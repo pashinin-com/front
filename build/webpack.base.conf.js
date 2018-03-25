@@ -23,9 +23,11 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
+    // modules: ['node_modules', 'src'],
     alias: {
       '@': resolve('src'),
-    }
+      // 'vuetify': resolve('node_modules/vuetify'),
+    },
   },
   module: {
     rules: [
@@ -42,6 +44,7 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig,
+        // include: [resolve('node_modules')],
       },
       {
         test: /\.js$/,
