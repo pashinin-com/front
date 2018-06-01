@@ -6,10 +6,15 @@
       <ul class="d-flex flex-auto flex-justify-between">
         <li class="d-inline-block d-md-none d-flex" @click.prevent="sidenav">
           <a href=""><i class="material-icons">menu</i></a>
-          <a href="">{{ menu_items[$route.path].title }}</a>
+          <a href="">{{ menuTitle($route.path) }}</a>
         </li>
-        <li v-for="path in menu" class="d-none d-md-inline-block">
-          <router-link v-bind:class="{ active: path === $route.path }" :to="path" :key="path" @click.native="$store.commit('selectMenuItem', path)">{{ menu_items[path].title }}</router-link>
+        <!-- <li v-for="path in menu" class="d-none d-md-inline-block"> -->
+
+        <li v-for="path in $store.state.menu.paths" class="d-none d-md-inline-block">
+          <router-link
+            v-bind:class="{ active: path === $route.path }" :to="path" :key="path"
+            @click.native="$store.commit('selectMenuItem', path)">
+            {{ menuTitle(path) }}</router-link>
         </li>
       </ul>
     </nav>
@@ -20,8 +25,11 @@
         <!--     <i class="material-icons">message</i> -->
 			  <!--   </a> -->
         <!-- </li> -->
-        <li class="d-inline-block">
-          <a href="/login">ВОЙТИ</a>
+        <li class="d-inline-block" v-if="$store.state.user.authenticated">
+          <router-link to="/profile">Profile</router-link>
+        </li>
+        <li class="d-inline-block" v-else>
+          <router-link to="/login">ВОЙТИ</router-link>
         </li>
       </ul>
     </nav>
@@ -174,6 +182,16 @@ module.exports = {
   },
 
   methods: {
+    menuTitle(path) {
+      // menuTitle() {
+      try {
+        // return this.$store.state.menu.items[this.$route.path].title;
+        return this.$store.state.menu.items[path].title;
+      } catch (e) {
+        // TODO: log in Sentry, never should be here
+        return 'defaultVal';
+      }
+    },
     sidenav() {
       // sidenav-trigger
       // alert('a');
@@ -191,6 +209,7 @@ module.exports = {
       menu_items: {
         '/': {
           title: 'Главная',
+          // title: this.$store.state.org.title,
         },
         '/faq': {
           title: 'Вопросы',
@@ -200,6 +219,12 @@ module.exports = {
         },
         '/contacts': {
           title: 'Контакты',
+        },
+        '/login': {
+          title: 'Вход',
+        },
+        '/profile': {
+          title: 'Профиль',
         },
       },
     };
@@ -217,7 +242,7 @@ module.exports = {
 </script>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 $h: 50px;
 div.nav{
   position:fixed;
@@ -241,6 +266,12 @@ nav {
 			color: white;
 		}
 
+    &.router-link-exact-active {
+      /* #4078c0 */
+			/* border-bottom: 3px solid #F48024; */
+			background-color: darken(#4078c0, 10%);
+		}
+
   }
 	li {
 		$col: #535a60;
@@ -256,11 +287,7 @@ nav {
       background-color: lighten(#4078c0, 5%);
 		}
 
-    &.active {
-      /* #4078c0 */
-			/* border-bottom: 3px solid #F48024; */
-			background-color: darken(#4078c0, 10%);
-		}
+
 
 		// transition: all 0.1s linear;
 		transition: background-color cubic-bezier(.165, .84, .44, 1) .25s,border-bottom-color ease-in-out .25s;

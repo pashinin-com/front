@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>pwa-demo</title>
+    <title></title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
     <!-- <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
@@ -26,6 +26,8 @@
     <!-- Add to home screen for Windows -->
     <meta name="msapplication-TileImage" content="<%= htmlWebpackPlugin.files.publicPath %>static/img/icons/msapplication-icon-144x144.png">
     <meta name="msapplication-TileColor" content="#000000">
+
+    <!-- <script async src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
 
     <% for (var chunk of webpack.chunks) {
         for (var file of chunk.files) {

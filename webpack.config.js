@@ -14,7 +14,7 @@ module.exports = env => { return {
   // ["babel-polyfill", "src/main.js"]
   entry: {
     // bp: 'babel-polyfill',
-    index: './src/app.js',
+    index: './src/apps/pashinin.com/index.js',
     // another: './src/app.js',
   },
   output: {

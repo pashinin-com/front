@@ -1,18 +1,22 @@
-'use strict'
+'use strict';
 
-const path = require('path')
-const utils = require('./utils')
-const config = require('../config')
-const vueLoaderConfig = require('./vue-loader.conf')
+const path = require('path');
+const utils = require('./utils');
+const config = require('../config');
+const vueLoaderConfig = require('./vue-loader.conf');
 
-function resolve (dir) {
-  return path.join(__dirname, '..', dir)
+function resolve(dir) {
+  return path.join(__dirname, '..', dir);
 }
+
+// console.log(path.resolve(__dirname, '../src/components'));
 
 module.exports = {
   mode: 'development',
   entry: {
-    app: './src/main.js',
+    // app: './src/main.js',
+    app: `./src/apps/${process.argv[2]}/index.js`,
+    // app2: './src/apps/baumanka/index.js',
   },
   output: {
     path: config.build.assetsRoot,
@@ -23,9 +27,13 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
-    // modules: ['node_modules', 'src'],
+    modules: [resolve('src'), resolve('node_modules')],
     alias: {
       '@': resolve('src'),
+      srcc: resolve('src'),
+      components: path.resolve(__dirname, '../src/components'),
+      // components: 'src/components',
+      // '~': resolve('src'),
       // 'vuetify': resolve('node_modules/vuetify'),
     },
   },
@@ -45,6 +53,7 @@ module.exports = {
         loader: 'vue-loader',
         options: vueLoaderConfig,
         // include: [resolve('node_modules')],
+        include: [resolve('src')],
       },
       {
         test: /\.js$/,

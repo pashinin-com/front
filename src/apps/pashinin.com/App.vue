@@ -45,10 +45,14 @@
 
 <script>
 import Vue from 'vue';
-import store from './store';
+// import TopMenu from '../../components/TopMenu.vue';
+import TopMenu from 'components/TopMenu.vue';
+import MainEnroll from 'components/MainEnroll.vue';
+
+import store from '@/store';
+// import store from '../../store';
 // import VueMaterial from 'vue-material';
-import TopMenu from './components/TopMenu.vue';
-import MainEnroll from './components/MainEnroll.vue';
+
 
 // 'main-enroll': require('./components/MainEnroll.vue').default,
 
@@ -97,7 +101,7 @@ export default {
 /* @import 'materialize-css/sass/components/navbar'; */
 /* @import 'materialize-css/sass/components/sidenav'; */
 
-@import './css/main.scss';
+@import '~@/css/main.scss';
 @import 'primer-utilities/index';
 @import 'primer-layout/index';
 @import 'primer-forms/index';

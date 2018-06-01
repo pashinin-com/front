@@ -25,14 +25,14 @@
 		    </div>
 		    <div>
 		      <div>
-			      <div style="background:rgba(255,255,255,0.0);border:0px solid #aaa">
+			      <div style="background:rgba(255,255,255,0.0); max-width:400px;">
 			        <span class="right padb" style="font-size:1.4em"><b>{{$store.state.phone}}</b></span>
 			        <form class="bg-white2 border2" id="enrollform" action="request.path" method="POST"  v-on:submit.prevent="handleIt">
 				        <!-- csrf_input -->
-				        <input    class="form-control input-block my-3" name="name" type="text" value="" placeholder="Ваше имя"/>
-				        <input    class="form-control input-block my-3" name="phone" type="text" value="" placeholder="Skype / Телефон / Email"/>
-				        <textarea class="form-control input-block my-3" cols="30" name="message" rows="10" placeholder="С чем помочь?" style="height:5em"></textarea>
-				        <input class="btn btn-primary btn-large" type="submit" value="Записаться" />
+				        <input    class="form-control  my-2" name="name" type="text" value="" placeholder="Ваше имя"/>
+				        <input    class="form-control  my-2" name="phone" type="text" value="" placeholder="Skype / Телефон / Email"/>
+				        <textarea class="form-control  my-2" cols="30" name="message" rows="10" placeholder="С чем помочь?" style="height:5em"></textarea>
+				        <input class="btn btn-primary btn-large w100 my-2" type="submit" value="Записаться" />
 			        </form>
 			      </div>
 		      </div>

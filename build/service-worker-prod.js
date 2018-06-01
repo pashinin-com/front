@@ -1,5 +1,5 @@
-(function() {
-  'use strict';
+(() => {
+  // 'use strict';
 
   // Check to make sure service workers are supported in the current browser,
   // and that the current page is accessed from a secure origin. Using a
@@ -13,13 +13,13 @@
       )
     );
 
-  window.addEventListener('load', function() {
-      if ('serviceWorker' in navigator &&
-          (window.location.protocol === 'https:' || isLocalhost)) {
-        navigator.serviceWorker.register('service-worker.js')
-        .then(function(registration) {
+  window.addEventListener('load', () => {
+    if ('serviceWorker' in navigator &&
+        (window.location.protocol === 'https:' || isLocalhost)) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then((registration) => {
           // updatefound is fired if service-worker.js changes.
-          registration.onupdatefound = function() {
+          registration.onupdatefound = () => {
             // updatefound is also fired the very first time the SW is installed,
             // and there's no need to prompt for a reload at that point.
             // So check here to see if the page is already controlled,
@@ -28,7 +28,7 @@
               // The updatefound event implies that registration.installing is set
               var installingWorker = registration.installing;
 
-              installingWorker.onstatechange = function() {
+              installingWorker.onstatechange = () => {
                 switch (installingWorker.state) {
                   case 'installed':
                     // At this point, the old content will have been purged and the
@@ -47,9 +47,9 @@
               };
             }
           };
-        }).catch(function(e) {
+        }).catch((e) => {
           console.error('Error during service worker registration:', e);
         });
-      }
+    }
   });
 })();

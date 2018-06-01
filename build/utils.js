@@ -36,6 +36,8 @@ exports.cssLoaders = function (options) {
             // path.resolve("./node_modules/bootstrap-sass/assets/stylesheets")
             path.resolve('../node_modules'),
             path.resolve('./node_modules'),
+            // path.resolve('../../'),
+            // path.resolve('.'),
             // '../node_modules/',
           ],
         })
