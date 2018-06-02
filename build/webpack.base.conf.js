@@ -15,22 +15,22 @@ module.exports = {
   mode: 'development',
   entry: {
     // app: './src/main.js',
-    app: `./src/apps/${process.argv[2]}/index.js`,
-    // app2: './src/apps/baumanka/index.js',
+    app: `./src/${process.argv[2]}/index.js`,
+    // app2: './src/pashinin.com/index.js',
   },
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+      : config.dev.assetsPublicPath,
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     modules: [resolve('src'), resolve('node_modules')],
     alias: {
       '@': resolve('src'),
-      srcc: resolve('src'),
+      // srcc: resolve('src'),
       components: path.resolve(__dirname, '../src/components'),
       // components: 'src/components',
       // '~': resolve('src'),

@@ -1,18 +1,24 @@
 'use strict'
 
-const fs = require('fs')
-const path = require('path')
-const utils = require('./utils')
-const webpack = require('webpack')
-const config = require('../config')
-const merge = require('webpack-merge')
-const baseWebpackConfig = require('./webpack.base.conf')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
-const loadMinified = require('./load-minified')
+const fs = require('fs');
+const path = require('path');
+const utils = require('./utils');
+const webpack = require('webpack');
+const config = require('../config');
+const merge = require('webpack-merge');
+const baseWebpackConfig = require('./webpack.base.conf');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const loadMinified = require('./load-minified');
+
+// for HtmlWebpackPlugin
+const apps = [
+  'baumanka',
+  'pashinin',
+];
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -97,50 +103,65 @@ const webpackConfig = merge(baseWebpackConfig, {
     // duplicated CSS from different components can be deduped.
     new OptimizeCSSPlugin({
       cssProcessorOptions: {
-        safe: true
-      }
+        safe: true,
+      },
     }),
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
+      // The file to write the HTML to
       filename: process.env.NODE_ENV === 'testing'
         ? 'index.html'
+        // ? ${process.argv[2]}.html
         : config.build.index,
       template: 'index.html',
+
+      // When passing true or 'body' all javascript resources will be
+      // placed at the bottom of the body element. 'head' will place the
+      // scripts in the head element
       inject: true,
       minify: {
         removeComments: true,
         collapseWhitespace: true,
-        removeAttributeQuotes: true
+        removeAttributeQuotes: true,
         // more options:
         // https://github.com/kangax/html-minifier#options-quick-reference
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency',
+      // serviceWorkerLoader: `<script>${loadMinified(path.join(__dirname,
+      //   './service-worker-prod.js'))}</script>`
       serviceWorkerLoader: `<script>${loadMinified(path.join(__dirname,
-        './service-worker-prod.js'))}</script>`
+        './service-worker-prod.js'))}</script>`,
     }),
-
+    // new HtmlWebpackPlugin(), // Generates default index.html
+    // new HtmlWebpackPlugin({  // Also generate a test.html
+    //   filename: 'test.html',
+    //   template: 'src/assets/test.html'
+    // })
 
     // copy custom static assets
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, '../static'),
         to: config.build.assetsSubDirectory,
-        ignore: ['.*']
-      }
+        ignore: ['.*'],
+      },
     ]),
-    // service worker caching
+
+    // What files will service worker cache.
+    // They will be added to output file "service-worker.js"
     new SWPrecacheWebpackPlugin({
       cacheId: 'pwa-demo',
       filename: 'service-worker.js',
+      // filename: `sw-${process.argv[2]}.js`,
       staticFileGlobs: ['dist/**/*.{js,html,css}'],
       minify: true,
-      stripPrefix: 'dist/'
-    })
-  ]
-})
+      stripPrefix: 'dist/',
+    }),
+  ],
+});
 
 if (config.build.productionGzip) {
   const CompressionWebpackPlugin = require('compression-webpack-plugin')

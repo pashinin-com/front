@@ -1,12 +1,19 @@
-'use strict'
-
 // see http://vuejs-templates.github.io/webpack for documentation.
-const path = require('path')
+const path = require('path');
 
 module.exports = {
   build: {
     env: require('./prod.env'),
-    index: path.resolve(__dirname, '../dist/index.html'),
+    // index.html in different folders:
+    // index: path.resolve(__dirname, `../dist/${process.argv[2]}/index.html`),
+
+    // same folder, different names of .html files
+    index: path.resolve(__dirname, `../dist/${process.argv[2]}.html`),
+
+    // each app in separate folder:
+    // assetsRoot: path.resolve(__dirname, `../dist/${process.argv[2]}`),
+
+    // one folder for all apps
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
@@ -21,7 +28,7 @@ module.exports = {
     // View the bundle analyzer report after build finishes:
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
-    bundleAnalyzerReport: process.env.npm_config_report
+    bundleAnalyzerReport: process.env.npm_config_report,
   },
   dev: {
     env: require('./dev.env'),
