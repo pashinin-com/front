@@ -5,9 +5,7 @@ import store from '@/store';
 // import Hello from '@/components/Hello'
 // import Index from './components/Index.vue'
 // import Questions from './components/Questions.vue'
-const Questions = () => import('../../../components/Questions.vue');
-// const Index = () => import('../../../components/Index.vue');
-// const Login = () => import('@/components/Index.vue');
+const Questions = () => import('@/components/Questions.vue');
 const Index = () => import('../pages/Index.vue');
 const Faculties = () => import('../pages/Faculties.vue');
 const Department = () => import('../pages/Department.vue');
